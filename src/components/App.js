@@ -9,6 +9,8 @@ import { ArrayCardsContext } from "../contexts/ArrayCardsContext.js";
 import EditProfilePopup from "./EditProfilePopup.js";
 import EditAvatarPopup from "./EditAvatarPopup";
 import AddPlacePopup from "./AddPlacePopup";
+// import Register from "./Register"
+// import Login from "./Login"
 
 function App() {
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
@@ -139,6 +141,8 @@ function App() {
     <CurrentUserContext.Provider value={currentUser}>
       <ArrayCardsContext.Provider value={cards}>
         <Header />
+        {/* <Register /> */}
+        {/* <Login /> */}
         <Main
           cards={cards}
           onEditProfile={handleEditProfileClick}

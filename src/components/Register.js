@@ -3,8 +3,8 @@ export default function Register() {
       <div className="register">
         <h2 className="register__title">Регистрация</h2>
         <form className="register__form">
-        <input className="register__input register__input_form_email" />
-        <input className="register__input register__input_form_password" />
+        <input className="register__input register__input_form_register_email" type="email" placeholder="Email" />
+        <input className="register__input register__input_form_register_password" type="password" placeholder="Пароль" />
         <button className="register__button">Зарегистрироваться</button>
         </form>
         <p className="register__question">Уже зарегистрированы? Войти</p>
