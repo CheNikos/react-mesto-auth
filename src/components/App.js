@@ -9,7 +9,7 @@ import { ArrayCardsContext } from "../contexts/ArrayCardsContext.js";
 import EditProfilePopup from "./EditProfilePopup.js";
 import EditAvatarPopup from "./EditAvatarPopup";
 import AddPlacePopup from "./AddPlacePopup";
-// import Register from "./Register"
+import Register from "./Register"
 // import Login from "./Login"
 
 function App() {
@@ -141,9 +141,9 @@ function App() {
     <CurrentUserContext.Provider value={currentUser}>
       <ArrayCardsContext.Provider value={cards}>
         <Header />
-        {/* <Register /> */}
+        <Register />
         {/* <Login /> */}
-        <Main
+        {/* <Main
           cards={cards}
           onEditProfile={handleEditProfileClick}
           onAddPlace={handleAddPlaceClick}
@@ -174,7 +174,7 @@ function App() {
           linkCard={selectedCard}
           onClose={closeAllPopups}
         />
-        <Footer />
+        <Footer /> */}
       </ArrayCardsContext.Provider>
     </CurrentUserContext.Provider>
   );
