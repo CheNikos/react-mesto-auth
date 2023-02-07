@@ -9,8 +9,11 @@ import { ArrayCardsContext } from "../contexts/ArrayCardsContext.js";
 import EditProfilePopup from "./EditProfilePopup.js";
 import EditAvatarPopup from "./EditAvatarPopup";
 import AddPlacePopup from "./AddPlacePopup";
-import Register from "./Register"
-import Login from "./Login"
+import Register from "./Register";
+import Login from "./Login";
+import * as auth from "../utils/auth";
+import { Route, Routes, Navigate, useNavigate } from "react-router-dom";
+import ProtectedRoute from "./ProtectedRoute";
 
 function App() {
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
@@ -25,6 +28,45 @@ function App() {
     isEditProfilePopupOpen ||
     isAddPlacePopupOpen ||
     selectedCard.link;
+  const [loggedIn, setLoggedIn] = useState(false);
+  const [userData, setUserData] = useState({
+    email: "",
+  });
+  const navigate = useNavigate();
+  
+  function handleLogin({ email, password }) {
+    return auth.authorize(email, password).then((data) => {
+      if (data.jwt) {
+        localStorage.setItem("jwt", data.jwt);
+        setLoggedIn(true);
+        setUserData({
+          email: data.user.email,
+        });
+        navigate("/");
+      }
+    });
+  }
+
+  function handleRegister({ email, password }) {
+    return auth.register(email, password).then(() => {
+      navigate("/signin");
+    })
+    .catch((err) => console.log(err));
+  }
+
+  useEffect(() => {
+    const jwt = localStorage.getItem("jwt");
+    if (jwt) {
+      auth
+        .getContent(jwt)
+        .then((data) => {
+          if (data) {
+            setLoggedIn(true);
+          }
+        })
+        .catch((err) => console.log(err));
+    }
+  }, []);
 
   useEffect(() => {
     Promise.all([api.getUserInfo(), api.getInitialCards()])
@@ -141,17 +183,48 @@ function App() {
     <CurrentUserContext.Provider value={currentUser}>
       <ArrayCardsContext.Provider value={cards}>
         <Header />
-        <Register />
-        {/* <Login /> */}
-        {/* <Main
-          cards={cards}
-          onEditProfile={handleEditProfileClick}
-          onAddPlace={handleAddPlaceClick}
-          onEditAvatar={handleChangeAvatarClick}
-          onCardClick={handleCardClick}
-          onCardLike={handleCardLike}
-          onCardDelete={handleCardDelete}
-        />
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <ProtectedRoute
+                loggedIn={loggedIn}
+                component={Main}
+                cards={cards}
+                onEditProfile={handleEditProfileClick}
+                onAddPlace={handleAddPlaceClick}
+                onEditAvatar={handleChangeAvatarClick}
+                onCardClick={handleCardClick}
+                onCardLike={handleCardLike}
+                onCardDelete={handleCardDelete}
+                userData={userData}
+              />
+            }
+          />
+          <Route
+            path="/signup"
+            element={
+              <div className="registerContainer">
+                <Register handleRegister={handleRegister} />
+              </div>
+            }
+          />
+          <Route
+            path="/signin"
+            element={
+              <div className="loginContainer">
+                <Login handleLogin={handleLogin} />
+              </div>
+            }
+          />
+          <Route
+            path="*"
+            element={
+              loggedIn ? <Navigate to="/" /> : <Navigate to="/signup" />
+            }
+          />
+        </Routes>
+        <Footer />
         <EditProfilePopup
           isOpen={isEditProfilePopupOpen}
           onClose={closeAllPopups}
@@ -174,7 +247,6 @@ function App() {
           linkCard={selectedCard}
           onClose={closeAllPopups}
         />
-        <Footer /> */}
       </ArrayCardsContext.Provider>
     </CurrentUserContext.Provider>
   );

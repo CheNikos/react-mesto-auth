@@ -47,7 +47,7 @@ export default function Register({ handleRegister }) {
         />
         <button type="submit" className="register__button">Зарегистрироваться</button>
       </form>
-      <Link to="/login" className="register__question">Уже зарегистрированы? Войти</Link>
+      <Link to="/signin" className="register__question">Уже зарегистрированы? Войти</Link>
     </div>
   );
 }
