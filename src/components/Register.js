@@ -21,6 +21,7 @@ export default function Register({ handleRegister }) {
 
     if (userData.password) {
       handleRegister(userData)
+      .catch((err) => console.log(err))
   }
   }
 

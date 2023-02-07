@@ -21,12 +21,15 @@ export default function Login({ handleLogin }) {
     if (!userData.username || !userData.password) {
       return;
     }
-
-    handleLogin(userData);
+    handleLogin(userData)
+      .then(() => {
+        setUserData({ email: "", password: "" });
+      })
+      .catch((err) => console.log(err));
   }
 
   return (
-    <div className="login">
+    <div onSubmit={handleSubmit} className="login">
       <h2 className="login__title">Вход</h2>
       <form className="login__form">
         <input
@@ -47,7 +50,9 @@ export default function Login({ handleLogin }) {
           value={userData.password || ""}
           onChange={handleChange}
         />
-        <button className="login__button">Войти</button>
+        <button type="submit" className="login__button">
+          Войти
+        </button>
       </form>
     </div>
   );
