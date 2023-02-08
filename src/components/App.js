@@ -34,13 +34,17 @@ function App() {
   });
   const navigate = useNavigate();
   
+  useEffect(() => {
+    tokenCheck();
+  }, []);
+  
   function handleLogin({ email, password }) {
     return auth.authorize(email, password).then((data) => {
       if (data.jwt) {
         localStorage.setItem("jwt", data.jwt);
         setLoggedIn(true);
         setUserData({
-          email: data.user.email,
+          email: data.data.email,
         });
         navigate("/");
       }
@@ -51,22 +55,20 @@ function App() {
     return auth.register(email, password).then(() => {
       navigate("/signin");
     })
-    .catch((err) => console.log(err));
   }
 
-  useEffect(() => {
+  function tokenCheck() {
     const jwt = localStorage.getItem("jwt");
     if (jwt) {
-      auth
-        .getContent(jwt)
-        .then((data) => {
-          if (data) {
-            setLoggedIn(true);
-          }
-        })
-        .catch((err) => console.log(err));
+      auth.getContent(jwt).then((res) => {
+        setLoggedIn(true);
+        setUserData({
+          email: res.email,
+        });
+        navigate("/");
+      });
     }
-  }, []);
+  }
 
   useEffect(() => {
     Promise.all([api.getUserInfo(), api.getInitialCards()])
@@ -204,17 +206,13 @@ function App() {
           <Route
             path="/signup"
             element={
-              <div className="registerContainer">
                 <Register handleRegister={handleRegister} />
-              </div>
             }
           />
           <Route
             path="/signin"
             element={
-              <div className="loginContainer">
                 <Login handleLogin={handleLogin} />
-              </div>
             }
           />
           <Route

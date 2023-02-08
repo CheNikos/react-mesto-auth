@@ -18,7 +18,7 @@ export default function Login({ handleLogin }) {
   function handleSubmit(e) {
     e.preventDefault();
 
-    if (!userData.username || !userData.password) {
+    if (!userData.email || !userData.password) {
       return;
     }
     handleLogin(userData)
@@ -29,9 +29,9 @@ export default function Login({ handleLogin }) {
   }
 
   return (
-    <div onSubmit={handleSubmit} className="login">
+    <div className="login">
       <h2 className="login__title">Вход</h2>
-      <form className="login__form">
+      <form onSubmit={handleSubmit} className="login__form">
         <input
           className="login__input login__input_form_login_email"
           type="email"
