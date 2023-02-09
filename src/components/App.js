@@ -35,16 +35,17 @@ function App() {
   const navigate = useNavigate();
   
   useEffect(() => {
-    tokenCheck();
+    tokenCheck(); 
+    // eslint-disable-next-line
   }, []);
   
   function handleLogin({ email, password }) {
     return auth.authorize(email, password).then((data) => {
-      if (data.jwt) {
-        localStorage.setItem("jwt", data.jwt);
+      if (data.token) {
+        localStorage.setItem("jwt", data.token);
         setLoggedIn(true);
         setUserData({
-          email: data.data.email,
+          email: email,
         });
         navigate("/");
       }
