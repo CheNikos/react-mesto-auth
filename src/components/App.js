@@ -33,12 +33,12 @@ function App() {
     email: "",
   });
   const navigate = useNavigate();
-  
+
   useEffect(() => {
-    tokenCheck(); 
+    tokenCheck();
     // eslint-disable-next-line
   }, []);
-  
+
   function handleLogin({ email, password }) {
     return auth.authorize(email, password).then((data) => {
       if (data.token) {
@@ -55,7 +55,7 @@ function App() {
   function handleRegister({ email, password }) {
     return auth.register(email, password).then(() => {
       navigate("/signin");
-    })
+    });
   }
 
   function tokenCheck() {
@@ -206,21 +206,12 @@ function App() {
           />
           <Route
             path="/signup"
-            element={
-                <Register handleRegister={handleRegister} />
-            }
+            element={<Register handleRegister={handleRegister} />}
           />
-          <Route
-            path="/signin"
-            element={
-                <Login handleLogin={handleLogin} />
-            }
-          />
+          <Route path="/signin" element={<Login handleLogin={handleLogin} />} />
           <Route
             path="*"
-            element={
-              loggedIn ? <Navigate to="/" /> : <Navigate to="/signup" />
-            }
+            element={loggedIn ? <Navigate to="/" /> : <Navigate to="/signup" />}
           />
         </Routes>
         <Footer />
