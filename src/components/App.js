@@ -182,10 +182,17 @@ function App() {
       });
   }
 
+  function handleSingOut() {
+    localStorage.removeItem("jwt");
+    // setHeaderEmail("");
+    setLoggedIn(false);
+    navigate("/sign-in");
+  }
+
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <ArrayCardsContext.Provider value={cards}>
-        <Header />
+        <Header onSignOut={handleSingOut} />
         <Routes>
           <Route
             path="/"
