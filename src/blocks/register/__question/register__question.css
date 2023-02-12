@@ -8,5 +8,9 @@
   margin-bottom: 0;
   display: block;
   text-decoration: none;
+}
+
+.register__question:hover {
   cursor: pointer;
+  opacity: 0.6;
 }

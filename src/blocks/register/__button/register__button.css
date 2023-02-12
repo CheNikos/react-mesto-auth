@@ -6,5 +6,9 @@
   font-weight: 400;
   font-size: 18px;
   line-height: 22px;
+}
+
+.register__button:hover{
+  opacity: 0.85;
   cursor: pointer;
 }

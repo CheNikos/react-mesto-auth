@@ -14,7 +14,7 @@ import Login from "./Login";
 import * as auth from "../utils/auth";
 import { Route, Routes, Navigate, useNavigate } from "react-router-dom";
 import ProtectedRoute from "./ProtectedRoute";
-import InfoTooltip from "./infoTooltip"
+import InfoTooltip from "./infoTooltip";
 
 function App() {
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
@@ -34,45 +34,57 @@ function App() {
     email: "",
   });
   const navigate = useNavigate();
-  const [headerEmail, setHeaderEmail] = useState("")
+  const [headerEmail, setHeaderEmail] = useState("");
+  const [isConfirmationPopupOpen, setIsConfirmationPopupOpen] = useState(false);
+  const [isInfoTolltip, setIsInfoTolltip] = useState(false);
 
   useEffect(() => {
     const jwt = localStorage.getItem("jwt");
     if (jwt) {
-      auth
-        .getContent(jwt)
-        .then((data) => {
-          if (data) {
-            setLoggedIn(true);
-            setHeaderEmail(data.data.email);
-            navigate("/");
-          }
-        })
-        .catch((err) => console.log(err));
+      auth.getContent(jwt).then((data) => {
+        if (data) {
+          setLoggedIn(true);
+          setHeaderEmail(data.data.email);
+          navigate("/");
+        }
+      });
     }
     // eslint-disable-next-line
   }, []);
-  
-  
 
   function handleLogin({ email, password }) {
-    return auth.authorize(email, password).then((data) => {
-      if (data.token) {
-        localStorage.setItem("jwt", data.token);
-        setLoggedIn(true);
-        setHeaderEmail(email);
-        setUserData({
-          email: email,
-        });
-        navigate("/");
-      }
-    });
+    return auth
+      .authorize(email, password)
+      .then((data) => {
+        if (data.token) {
+          localStorage.setItem("jwt", data.token);
+          setLoggedIn(true);
+          setHeaderEmail(email);
+          setUserData({
+            email: email,
+          });
+          navigate("/");
+        }
+      })
+      .catch((err) => {
+        setIsInfoTolltip(false);
+        setIsConfirmationPopupOpen(true);
+        console.log(err);
+      });
   }
 
   function handleRegister({ email, password }) {
-    return auth.register(email, password).then(() => {
-      navigate("/signin");
-    });
+    return auth
+      .register(email, password)
+      .then(() => {
+        navigate("/signin");
+        setIsInfoTolltip(true);
+      })
+      .catch((err) => {
+        setIsInfoTolltip(false);
+        console.log(err);
+      })
+      .finally(() => setIsConfirmationPopupOpen(true));
   }
 
   useEffect(() => {
@@ -148,6 +160,7 @@ function App() {
     setIsEditAvatarPopupOpen(false);
     setIsImagePopupOpen(false);
     setSelectedCard({ name: "", link: "" });
+    setIsConfirmationPopupOpen(false);
   }
 
   function handleUpdateUser({ name, about }) {
@@ -196,7 +209,7 @@ function App() {
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <ArrayCardsContext.Provider value={cards}>
-        <Header onSignOut={handleSingOut} headerEmail={headerEmail}/>
+        <Header onSignOut={handleSingOut} headerEmail={headerEmail} />
         <Routes>
           <Route
             path="/"
@@ -249,7 +262,11 @@ function App() {
           onClose={closeAllPopups}
         />
         <InfoTooltip
-          />
+          name={"confirmation"}
+          isOpen={isConfirmationPopupOpen}
+          onClose={closeAllPopups}
+          isConfirmation={isInfoTolltip}
+        />
       </ArrayCardsContext.Provider>
     </CurrentUserContext.Provider>
   );
