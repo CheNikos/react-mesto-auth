@@ -5,3 +5,14 @@
     margin: 32px 36px 60px 36px;
     text-align: center;
 }
+
+
+@media all and (max-width: 768px) {
+    .popup__title_type_confirmation {
+        font-weight: 900;
+        font-size: 20px;
+        line-height: 24px;
+        margin: 40px 18px 50px 18px;
+    }
+  }
+  

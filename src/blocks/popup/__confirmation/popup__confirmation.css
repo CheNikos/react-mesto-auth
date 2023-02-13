@@ -3,3 +3,10 @@
     height: 120px;
     margin-top: 60px;
 }
+
+
+@media all and (max-width: 768px) {
+    .popup__confirmation {
+        margin-top: 50px;
+    }
+  }
