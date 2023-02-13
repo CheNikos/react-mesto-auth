@@ -12,3 +12,14 @@
   cursor: pointer;
 }
 
+@media all and (max-width: 768px) {
+  .login__button {
+    margin-top: 173px;
+    width: 260px;
+    height: 46px;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 19px;
+  }
+}
+

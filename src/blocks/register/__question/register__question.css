@@ -14,3 +14,9 @@
   cursor: pointer;
   opacity: 0.6;
 }
+
+@media all and (max-width: 768px) {
+  .register__question {
+    margin-top: 20px;
+  }
+}

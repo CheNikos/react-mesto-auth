@@ -8,7 +8,18 @@
   line-height: 22px;
 }
 
-.register__button:hover{
+.register__button:hover {
   opacity: 0.85;
   cursor: pointer;
+}
+
+@media all and (max-width: 768px) {
+  .register__button {
+    margin-top: 173px;
+    width: 260px;
+    height: 46px;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 19px;
+  }
 }

@@ -10,5 +10,14 @@
   font-size: 14px;
   line-height: 17px;
   color: rgba(255, 255, 255, 1);
-  ;
+}
+
+@media all and (max-width: 768px) {
+  .register__input {
+    margin-top: 10px;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+    width: 256px;
+  }
 }

@@ -4,3 +4,9 @@
     flex-direction: column;
     align-content: center;
 }
+
+@media all and (max-width: 768px) {
+    .login__form {
+      margin-top: 10px;
+    }
+  }
