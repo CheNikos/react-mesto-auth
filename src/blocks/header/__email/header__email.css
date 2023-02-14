@@ -8,3 +8,12 @@
   margin: 0 24px 0 0;
   padding-top: 10px;
 }
+
+@media all and (max-width: 768px) {
+  .header__email {
+    margin-right: 10px;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+  }
+}

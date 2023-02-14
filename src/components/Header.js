@@ -20,7 +20,11 @@ export default function Header({ onSignOut, headerEmail }) {
       {location.pathname === "/" && (
         <div className="header__info">
           <p className="header__email">{headerEmail}</p>
-          <Link to="/signin" className="header__text_type_sign" onClick={onSignOut}>
+          <Link
+            to="/signin"
+            className="header__text_type_sign"
+            onClick={onSignOut}
+          >
             Выйти
           </Link>
         </div>

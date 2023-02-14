@@ -1,20 +1,23 @@
 .header__text_type_sign {
-    max-height: 22px;
-    font-weight: 400;
-    font-size: 18px;
-    line-height: 22px;
-    color: rgba(169, 169, 169, 1);
-    text-decoration: none;
-    cursor: pointer;
-    padding-top: 10px;
-  }
-  
-  .header__text_type_sign:hover {
-    opacity: 0.6;
-  }
+  max-height: 22px;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 22px;
+  color: rgba(169, 169, 169, 1);
+  text-decoration: none;
+  cursor: pointer;
+  padding-top: 10px;
+}
 
-  @media all and (max-width: 768px) {
-    .header__text_type_sign {
-      margin-right: 30px;
-    }
+.header__text_type_sign:hover {
+  opacity: 0.6;
+}
+
+@media all and (max-width: 768px) {
+  .header__text_type_sign {
+    margin-right: 30px;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
   }
+}
