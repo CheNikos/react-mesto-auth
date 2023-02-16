@@ -87,7 +87,9 @@ function App() {
       .finally(() => setIsConfirmationPopupOpen(true));
   }
 
+
   useEffect(() => {
+    if (loggedIn) {
     Promise.all([api.getUserInfo(), api.getInitialCards()])
       .then(([userData, initialCards]) => {
         setCurrentUser(userData);
@@ -95,8 +97,9 @@ function App() {
       })
       .catch((err) => {
         console.log(`Ошибка: ${err}`);
-      });
-  }, [setCurrentUser, setCards]);
+      });}
+  }, [setCurrentUser, setCards, loggedIn]);
+
 
   useEffect(() => {
     function closeByEscape(evt) {
